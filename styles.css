@@ -140,3 +140,29 @@ a:hover,
 .nav a[aria-current="page"]{color:#fff}
 .nav a[aria-current="page"]:hover{color:var(--brass)}
 .btn:hover,.btn.ghost:hover{background:transparent;color:var(--brass);border-color:var(--brass)}
+
+/* İletişim formu */
+.contact-form{display:grid;gap:1.1rem;max-width:44rem}
+.contact-form .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+.contact-form label{display:grid;gap:.35rem;font-size:.95rem;font-weight:600;color:var(--ink)}
+.contact-form .req{color:var(--muted);font-weight:400}
+.contact-form input[type=text],.contact-form input[type=email],.contact-form input[type=tel],.contact-form textarea{
+  font:inherit;font-weight:400;color:var(--text);background:var(--paper);border:1px solid var(--line);padding:.7rem .8rem;width:100%;border-radius:0}
+.contact-form textarea{resize:vertical;min-height:9rem}
+.contact-form input:focus,.contact-form textarea:focus{outline:2px solid var(--sea);outline-offset:0;border-color:var(--sea)}
+.contact-form .check{display:flex;align-items:flex-start;gap:.6rem;font-weight:400;color:var(--muted)}
+.contact-form .check input{margin-top:.35rem;width:1rem;height:1rem;accent-color:var(--sea)}
+.contact-form .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.contact-form .submit{justify-self:start;background:var(--ink);color:var(--stone);border-color:var(--ink);cursor:pointer;font:inherit;font-weight:600}
+.contact-form .submit:hover{background:transparent;color:var(--brass-deep);border-color:var(--brass-deep)}
+.contact-form .submit:disabled{opacity:.6;cursor:wait}
+.form-status{margin:0;min-height:1.5em}
+.form-status.ok{color:var(--sea)}
+.form-status.err{color:#9B2C2C}
+@media (max-width:52rem){.contact-form .field-row{grid-template-columns:1fr}}
+
+/* Yasal metin */
+.legal-text h3{font-size:1.15rem;margin:1.8rem 0 .5rem}
+.legal-text ul{max-width:68ch;padding-left:1.2rem;margin:0 0 1em}
+.legal-text li{margin-bottom:.3rem}
+.legal-text h2#kvkk{margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--line)}

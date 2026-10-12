@@ -28,20 +28,61 @@
   </div>
 </header>
 <main id="icerik">
-<div class="page-head"><div class="wrap"><h1>İletişim</h1><p>Görüşme için bizi arayabilir veya e-posta gönderebilirsiniz.</p></div></div>
+<div class="page-head"><div class="wrap"><h1>İletişim</h1><p>Görüşme için bizi arayabilir, e-posta gönderebilir veya aşağıdaki formu doldurabilirsiniz.</p></div></div>
 <section><div class="wrap contact-grid">
   <div><h2>Telefon</h2><a href="tel:+902422433284">(0242) 243 32 84</a></div>
-  <div><h2>E-posta</h2><a href="mailto:tuncavukatlik@hotmail.com">tuncavukatlik@hotmail.com</a></div>
+  <div><h2>E-posta</h2><a href="mailto:bilgi@tuncavukatlik.com">bilgi@tuncavukatlik.com</a></div>
   <div><h2>Adres</h2><p>Yeşilbahçe Mah. Metin Kasapoğlu Cad. No:24 Erman Apt. K:2 D:6, Muratpaşa / Antalya</p><a href="https://www.google.com/maps/search/?api=1&query=Metin+Kasapo%C4%9Flu+Cad.+No%3A24+Muratpa%C5%9Fa+Antalya" rel="noopener" target="_blank">Haritada aç</a></div>
+</div></section>
+<section aria-labelledby="form-baslik"><div class="wrap split">
+  <div><h2 id="form-baslik">Bize ulaşın</h2><p class="lead">Mesajınız büromuza e-posta olarak iletilir; size en kısa sürede dönüş yapılır.</p></div>
+  <form id="iletisim-formu" class="contact-form" action="/api/iletisim" method="post" novalidate>
+    <div class="field-row">
+      <label><span class="lbl">Ad soyad <span class="req" aria-hidden="true">*</span></span><input name="ad" type="text" autocomplete="name" maxlength="120" required></label>
+      <label><span class="lbl">E-posta <span class="req" aria-hidden="true">*</span></span><input name="eposta" type="email" autocomplete="email" maxlength="200" required></label>
+    </div>
+    <div class="field-row">
+      <label><span class="lbl">Telefon</span><input name="telefon" type="tel" autocomplete="tel" maxlength="40"></label>
+      <label><span class="lbl">Konu</span><input name="konu" type="text" maxlength="150"></label>
+    </div>
+    <label><span class="lbl">Mesajınız <span class="req" aria-hidden="true">*</span></span><textarea name="mesaj" rows="6" maxlength="5000" required></textarea></label>
+    <label class="hp" aria-hidden="true">Web sitesi<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+    <label class="check"><input name="kvkk" type="checkbox" value="evet" required><span><a href="yasal-uyari.html#kvkk" target="_blank" rel="noopener">Kişisel verilerin korunmasına ilişkin aydınlatma metnini</a> okudum.</span></label>
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAAFUpCLhH-B5e6wQS" data-language="tr" data-theme="light"></div>
+    <button class="btn submit" type="submit">Gönder</button>
+    <p class="form-status" role="status" aria-live="polite"></p>
+  </form>
 </div></section>
 </main>
 <footer class="site-footer">
   <div class="wrap">
     <div><strong>Tunç Avukatlık &amp; Arabuluculuk Bürosu</strong></div>
     <div><strong>Adres</strong>Yeşilbahçe Mah. Metin Kasapoğlu Cad. No:24 Erman Apt. K:2 D:6, Muratpaşa / Antalya<br><a href="https://www.google.com/maps/search/?api=1&query=Metin+Kasapo%C4%9Flu+Cad.+No%3A24+Muratpa%C5%9Fa+Antalya" rel="noopener" target="_blank">Haritada aç</a></div>
-    <div><strong>İletişim</strong><a href="tel:+902422433284">(0242) 243 32 84</a><br><a href="mailto:tuncavukatlik@hotmail.com">tuncavukatlik@hotmail.com</a></div>
+    <div><strong>İletişim</strong><a href="tel:+902422433284">(0242) 243 32 84</a><br><a href="mailto:bilgi@tuncavukatlik.com">bilgi@tuncavukatlik.com</a></div>
     <div class="legal">© 2026 Tunç Avukatlık &amp; Arabuluculuk Bürosu. Bu sitedeki bilgiler genel bilgilendirme amaçlıdır, hukuki mütalaa niteliği taşımaz. <a href="yasal-uyari.html">Yasal uyarı ve KVKK</a></div>
   </div>
 </footer>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script>
+(function(){
+  var f=document.getElementById("iletisim-formu"); if(!f) return;
+  var st=f.querySelector(".form-status"), btn=f.querySelector("button[type=submit]");
+  var msg={eksik:"Lütfen zorunlu alanları doldurun ve aydınlatma metnini onaylayın.",eposta:"Lütfen geçerli bir e-posta adresi girin.",dogrulama:"Güvenlik doğrulaması tamamlanamadı. Lütfen tekrar deneyin.",genel:"Mesajınız gönderilemedi. Lütfen daha sonra tekrar deneyin veya bizi telefonla arayın."};
+  function show(t,ok){st.textContent=t;st.className="form-status "+(ok?"ok":"err");}
+  f.addEventListener("submit",function(e){
+    e.preventDefault();
+    if(!f.checkValidity()){show(f.eposta.validity.typeMismatch?msg.eposta:msg.eksik,false);return;}
+    btn.disabled=true; btn.textContent="Gönderiliyor…"; show("",true);
+    fetch(f.action,{method:"POST",body:new FormData(f)})
+      .then(function(r){return r.json().catch(function(){return {ok:false};});})
+      .then(function(d){
+        if(d&&d.ok){f.reset();show("Mesajınız iletildi. Teşekkür ederiz.",true);}
+        else{show(msg[d&&d.error]||msg.genel,false);}
+      })
+      .catch(function(){show(msg.genel,false);})
+      .finally(function(){btn.disabled=false;btn.textContent="Gönder";if(window.turnstile)turnstile.reset();});
+  });
+})();
+</script>
 </body>
 </html>
